@@ -134,17 +134,48 @@ let currentTutors = [...tutorsData];
 let displayedTutors = 6;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     renderTutors();
     initializeNavigation();
     initializeMobileMenu();
 });
 
+// Notification system
+function showNotification(message, type = 'success') {
+    // Remove existing notification if any
+    const existingNotif = document.querySelector('.notification');
+    if (existingNotif) {
+        existingNotif.remove();
+    }
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${type === 'success' ? '✓' : '⚠'}</span>
+            <span class="notification-message">${message}</span>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    // Trigger animation
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+
 // Navigation scroll effect
 function initializeNavigation() {
     const navbar = document.getElementById('navbar');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -152,10 +183,10 @@ function initializeNavigation() {
             navbar.classList.remove('scrolled');
         }
     });
-    
+
     // Active link on scroll
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
@@ -166,7 +197,7 @@ function initializeNavigation() {
 function initializeMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
-    
+
     mobileMenuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
@@ -176,7 +207,7 @@ function initializeMobileMenu() {
 function renderTutors(tutors = currentTutors.slice(0, displayedTutors)) {
     const grid = document.getElementById('tutorsGrid');
     grid.innerHTML = '';
-    
+
     tutors.forEach(tutor => {
         const card = createTutorCard(tutor);
         grid.appendChild(card);
@@ -188,7 +219,7 @@ function createTutorCard(tutor) {
     const card = document.createElement('div');
     card.className = 'tutor-card';
     card.onclick = () => openTutorModal(tutor);
-    
+
     card.innerHTML = `
         <div class="tutor-header">
             <div class="tutor-avatar">${tutor.avatar}</div>
@@ -218,7 +249,7 @@ function createTutorCard(tutor) {
             </button>
         </div>
     `;
-    
+
     return card;
 }
 
@@ -236,32 +267,32 @@ function applyFilters() {
     const level = document.getElementById('levelFilter').value;
     const location = document.getElementById('locationFilter').value;
     const price = document.getElementById('priceFilter').value;
-    
+
     currentTutors = tutorsData.filter(tutor => {
         let match = true;
-        
+
         if (subject && !tutor.subjects.includes(subject)) {
             match = false;
         }
-        
+
         if (level && tutor.level !== level) {
             match = false;
         }
-        
+
         if (location && tutor.location !== location) {
             match = false;
         }
-        
+
         if (price) {
             const [min, max] = price.split('-').map(Number);
             if (tutor.price < min || tutor.price > max) {
                 match = false;
             }
         }
-        
+
         return match;
     });
-    
+
     displayedTutors = 6;
     renderTutors();
 }
@@ -269,16 +300,16 @@ function applyFilters() {
 // Search tutors
 function searchTutors() {
     const searchTerm = document.getElementById('heroSearch').value.toLowerCase();
-    
+
     currentTutors = tutorsData.filter(tutor => {
         return tutor.name.toLowerCase().includes(searchTerm) ||
-               tutor.subjects.some(s => s.toLowerCase().includes(searchTerm)) ||
-               tutor.location.toLowerCase().includes(searchTerm);
+            tutor.subjects.some(s => s.toLowerCase().includes(searchTerm)) ||
+            tutor.location.toLowerCase().includes(searchTerm);
     });
-    
+
     displayedTutors = 6;
     renderTutors();
-    
+
     // Scroll to tutors section
     document.getElementById('tutors').scrollIntoView({ behavior: 'smooth' });
 }
@@ -300,7 +331,7 @@ function loadMoreTutors() {
 function openTutorModal(tutor) {
     const modal = document.getElementById('tutorModal');
     const details = document.getElementById('tutorDetails');
-    
+
     details.innerHTML = `
         <div class="tutor-modal-header">
             <div class="tutor-avatar" style="width: 120px; height: 120px; font-size: 3rem;">
@@ -346,7 +377,7 @@ function openTutorModal(tutor) {
             Liên hệ ngay
         </button>
     `;
-    
+
     modal.classList.add('active');
 }
 
@@ -378,7 +409,7 @@ function openBecomeTutorModal() {
 }
 
 // Close modal on outside click
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     if (e.target.classList.contains('modal')) {
         e.target.classList.remove('active');
     }
@@ -393,8 +424,47 @@ function handleLogin(e) {
 
 function handleRegister(e) {
     e.preventDefault();
-    alert('Chức năng đăng ký đang được phát triển!\n\nĐây là phiên bản demo. Trong phiên bản thực tế, bạn sẽ có thể tạo tài khoản mới.');
-    closeModal('registerModal');
+
+    // Get form data
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value;
+    const email = form.querySelector('input[type="email"]').value;
+    const password = form.querySelectorAll('input[type="password"]')[0].value;
+    const confirmPassword = form.querySelectorAll('input[type="password"]')[1].value;
+
+    // Validation
+    if (!name || !email || !password || !confirmPassword) {
+        showNotification('Vui lòng điền đầy đủ thông tin!', 'error');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showNotification('Mật khẩu xác nhận không khớp!', 'error');
+        return;
+    }
+
+    if (password.length < 6) {
+        showNotification('Mật khẩu phải có ít nhất 6 ký tự!', 'error');
+        return;
+    }
+
+    // Save to localStorage (demo)
+    const userData = {
+        name: name,
+        email: email,
+        registeredAt: new Date().toISOString()
+    };
+
+    localStorage.setItem('giasuonline_user', JSON.stringify(userData));
+
+    // Show success message
+    showNotification(`Chào mừng ${name}! Đăng ký thành công! 🎉`, 'success');
+
+    // Close modal and reset form
+    setTimeout(() => {
+        closeModal('registerModal');
+        form.reset();
+    }, 1500);
 }
 
 function handleBecomeTutor(e) {

@@ -1,0 +1,147 @@
+⚡ HƯỚNG DẪN NHANH - 5 PHÚT DEPLOY
+=====================================
+
+📍 Vị trí dự án: C:\Users\bourbon\.gemini\antigravity\scratch\gia-su
+
+🎯 MỤC TIÊU
+-----------
+Đăng trang web lên GitHub Pages để có:
+✅ Tên miền miễn phí: https://YOUR_USERNAME.github.io/gia-su-online/
+✅ Hosting miễn phí mãi mãi
+✅ HTTPS tự động
+✅ Cập nhật dễ dàng
+
+📋 CÁC BƯỚC (5-10 PHÚT)
+-----------------------
+
+BƯỚC 1: CÀI GIT (Nếu chưa có)
+-----------------------------
+1. Tải: https://git-scm.com/download/win
+2. Cài đặt (Next → Next → Install)
+3. Khởi động lại PowerShell
+
+BƯỚC 2: TẠO GITHUB ACCOUNT
+---------------------------
+1. Vào: https://github.com
+2. Click "Sign up"
+3. Nhập email, password, username
+4. Xác nhận email
+
+BƯỚC 3: TẠO REPOSITORY
+-----------------------
+1. Đăng nhập GitHub
+2. Click nút "+" → "New repository"
+3. Điền:
+   - Name: gia-su-online
+   - Public ✓
+   - KHÔNG tick "Initialize with README"
+4. Click "Create repository"
+
+BƯỚC 4: UPLOAD CODE
+--------------------
+Mở PowerShell trong thư mục dự án và chạy:
+
+cd C:\Users\bourbon\.gemini\antigravity\scratch\gia-su
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/YOUR_USERNAME/gia-su-online.git
+git branch -M main
+git push -u origin main
+
+⚠️ LƯU Ý: Thay YOUR_USERNAME bằng username GitHub của bạn!
+
+Khi push, GitHub sẽ hỏi:
+- Username: [tên GitHub của bạn]
+- Password: [dùng Personal Access Token - xem bên dưới]
+
+BƯỚC 5: TẠO PERSONAL ACCESS TOKEN
+----------------------------------
+(Chỉ cần làm 1 lần)
+
+1. GitHub → Settings (góc phải)
+2. Developer settings (cuối menu trái)
+3. Personal access tokens → Tokens (classic)
+4. "Generate new token (classic)"
+5. Note: "Git Push"
+6. Chọn: repo (tick tất cả)
+7. "Generate token"
+8. COPY TOKEN (chỉ hiện 1 lần!)
+9. Dùng token này làm password khi git push
+
+BƯỚC 6: KÍCH HOẠT GITHUB PAGES
+-------------------------------
+1. Vào repository trên GitHub
+2. Settings → Pages (menu trái)
+3. Source: "Deploy from a branch"
+4. Branch: main + / (root)
+5. Save
+
+BƯỚC 7: TRUY CẬP WEBSITE
+-------------------------
+Đợi 2-3 phút, vào:
+https://YOUR_USERNAME.github.io/gia-su-online/
+
+🎉 XONG! Website đã online!
+
+═══════════════════════════════════════
+
+🔄 CẬP NHẬT SAU NÀY
+-------------------
+Sau khi sửa code, chạy:
+
+git add .
+git commit -m "Mô tả thay đổi"
+git push
+
+Website tự động cập nhật sau vài phút!
+
+═══════════════════════════════════════
+
+❓ GẶP LỖI?
+-----------
+
+LỖI: "git is not recognized"
+→ Cài Git: https://git-scm.com/download/win
+
+LỖI: "Permission denied"
+→ Dùng Personal Access Token thay vì password
+
+LỖI: Website không hiện
+→ Đợi 5-10 phút, xóa cache (Ctrl+Shift+R)
+
+LỖI: 404 Not Found
+→ Kiểm tra Settings → Pages đã chọn branch main chưa
+
+═══════════════════════════════════════
+
+📚 TÀI LIỆU CHI TIẾT
+--------------------
+- HUONG-DAN-DEPLOY.md: Hướng dẫn đầy đủ
+- TONG-KET.md: Tổng kết dự án
+- README.md: Giới thiệu
+
+═══════════════════════════════════════
+
+💡 MẸO HAY
+----------
+✓ Test local trước: Mở index.html bằng trình duyệt
+✓ Commit thường xuyên
+✓ Viết commit message rõ ràng
+✓ Lưu Personal Access Token an toàn
+
+═══════════════════════════════════════
+
+🎯 SAU KHI DEPLOY
+-----------------
+☐ Share link với bạn bè
+☐ Thêm vào CV/Portfolio
+☐ Tùy chỉnh nội dung
+☐ Thêm gia sư thật
+☐ Kết nối tên miền riêng (tùy chọn)
+
+═══════════════════════════════════════
+
+Chúc bạn thành công! 🚀
+
+Nếu cần hỗ trợ, xem file HUONG-DAN-DEPLOY.md
