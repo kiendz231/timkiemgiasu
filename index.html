@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Gia Sư Online - Nền Tảng Kết Nối Gia Sư Uy Tín</title>
+    <meta name="description" content="Tìm kiếm gia sư online uy tín, chất lượng cao. Kết nối nhanh chóng với hàng ngàn gia sư giỏi trên toàn quốc.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-icon">📚</span>
+                    <span class="logo-text">GiaSư<span class="highlight">Online</span></span>
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="#home" class="nav-link active">Trang chủ</a>
+                    <a href="#tutors" class="nav-link">Tìm gia sư</a>
+                    <a href="#how-it-works" class="nav-link">Cách hoạt động</a>
+                    <a href="#become-tutor" class="nav-link">Trở thành gia sư</a>
+                    <a href="#contact" class="nav-link">Liên hệ</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-secondary" onclick="openLoginModal()">Đăng nhập</button>
+                    <button class="btn-primary" onclick="openRegisterModal()">Đăng ký</button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Tìm Gia Sư <span class="gradient-text">Chất Lượng</span>
+                        <br>Dễ Dàng & Nhanh Chóng
+                    </h1>
+                    <p class="hero-description">
+                        Kết nối với hàng ngàn gia sư uy tín, giàu kinh nghiệm trên toàn quốc. 
+                        Học tập hiệu quả, tiết kiệm thời gian và chi phí.
+                    </p>
+                    <div class="hero-search">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="heroSearch" placeholder="Tìm kiếm môn học, gia sư...">
+                            <button class="btn-search" onclick="searchTutors()">Tìm kiếm</button>
+                        </div>
+                        <div class="popular-subjects">
+                            <span>Phổ biến:</span>
+                            <button class="subject-tag" onclick="filterBySubject('Toán')">Toán</button>
+                            <button class="subject-tag" onclick="filterBySubject('Tiếng Anh')">Tiếng Anh</button>
+                            <button class="subject-tag" onclick="filterBySubject('Vật Lý')">Vật Lý</button>
+                            <button class="subject-tag" onclick="filterBySubject('Hóa Học')">Hóa Học</button>
+                        </div>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Gia sư</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10000+</div>
+                            <div class="stat-label">Học viên</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Hài lòng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-card card-1">
+                        <div class="card-icon">👨‍🏫</div>
+                        <div class="card-text">
+                            <div class="card-title">Gia sư giỏi</div>
+                            <div class="card-subtitle">Kinh nghiệm 5+ năm</div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="card-icon">⭐</div>
+                        <div class="card-text">
+                            <div class="card-title">Đánh giá cao</div>
+                            <div class="card-subtitle">4.9/5.0 sao</div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-3">
+                        <div class="card-icon">💰</div>
+                        <div class="card-text">
+                            <div class="card-title">Giá cả hợp lý</div>
+                            <div class="card-subtitle">Từ 100k/buổi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section" id="tutors">
+        <div class="container">
+            <h2 class="section-title">Tìm Gia Sư Phù Hợp</h2>
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label>Môn học</label>
+                    <select id="subjectFilter" onchange="applyFilters()">
+                        <option value="">Tất cả môn học</option>
+                        <option value="Toán">Toán học</option>
+                        <option value="Tiếng Anh">Tiếng Anh</option>
+                        <option value="Vật Lý">Vật Lý</option>
+                        <option value="Hóa Học">Hóa Học</option>
+                        <option value="Sinh Học">Sinh Học</option>
+                        <option value="Văn">Ngữ Văn</option>
+                        <option value="Lịch Sử">Lịch Sử</option>
+                        <option value="Địa Lý">Địa Lý</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Cấp học</label>
+                    <select id="levelFilter" onchange="applyFilters()">
+                        <option value="">Tất cả cấp</option>
+                        <option value="Tiểu học">Tiểu học</option>
+                        <option value="THCS">THCS</option>
+                        <option value="THPT">THPT</option>
+                        <option value="Đại học">Đại học</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Khu vực</label>
+                    <select id="locationFilter" onchange="applyFilters()">
+                        <option value="">Tất cả khu vực</option>
+                        <option value="Hà Nội">Hà Nội</option>
+                        <option value="TP.HCM">TP. Hồ Chí Minh</option>
+                        <option value="Đà Nẵng">Đà Nẵng</option>
+                        <option value="Hải Phòng">Hải Phòng</option>
+                        <option value="Cần Thơ">Cần Thơ</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Giá (VNĐ/buổi)</label>
+                    <select id="priceFilter" onchange="applyFilters()">
+                        <option value="">Tất cả mức giá</option>
+                        <option value="0-150000">Dưới 150k</option>
+                        <option value="150000-300000">150k - 300k</option>
+                        <option value="300000-500000">300k - 500k</option>
+                        <option value="500000-999999999">Trên 500k</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutors Grid -->
+    <section class="tutors-section">
+        <div class="container">
+            <div class="tutors-grid" id="tutorsGrid">
+                <!-- Tutors will be dynamically loaded here -->
+            </div>
+            <div class="load-more-container">
+                <button class="btn-secondary" onclick="loadMoreTutors()">Xem thêm gia sư</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Cách Hoạt Động</h2>
+            <p class="section-subtitle">Chỉ với 3 bước đơn giản để tìm gia sư phù hợp</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🔍</div>
+                    <h3 class="step-title">Tìm kiếm</h3>
+                    <p class="step-description">Sử dụng bộ lọc để tìm gia sư phù hợp với nhu cầu của bạn</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">📞</div>
+                    <h3 class="step-title">Liên hệ</h3>
+                    <p class="step-description">Xem hồ sơ chi tiết và liên hệ trực tiếp với gia sư</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📚</div>
+                    <h3 class="step-title">Bắt đầu học</h3>
+                    <p class="step-description">Sắp xếp lịch học và bắt đầu hành trình học tập</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Become Tutor -->
+    <section class="become-tutor" id="become-tutor">
+        <div class="container">
+            <div class="become-tutor-content">
+                <div class="become-tutor-text">
+                    <h2 class="section-title">Trở Thành Gia Sư</h2>
+                    <p class="section-subtitle">Chia sẻ kiến thức và kiếm thu nhập hấp dẫn</p>
+                    <ul class="benefits-list">
+                        <li>
+                            <span class="benefit-icon">✓</span>
+                            <span>Thu nhập hấp dẫn, linh hoạt thời gian</span>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">✓</span>
+                            <span>Tiếp cận hàng ngàn học viên tiềm năng</span>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">✓</span>
+                            <span>Hỗ trợ marketing và quảng bá miễn phí</span>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">✓</span>
+                            <span>Cộng đồng gia sư chuyên nghiệp</span>
+                        </li>
+                    </ul>
+                    <button class="btn-primary btn-large" onclick="openBecomeTutorModal()">
+                        Đăng ký ngay
+                    </button>
+                </div>
+                <div class="become-tutor-image">
+                    <div class="stats-card">
+                        <div class="stats-item">
+                            <div class="stats-value">15M+</div>
+                            <div class="stats-label">VNĐ/tháng</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-value">100+</div>
+                            <div class="stats-label">Học viên</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Liên Hệ Với Chúng Tôi</h2>
+            <p class="section-subtitle">Có câu hỏi? Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>support@giasuonline.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h4>Điện thoại</h4>
+                            <p>0123 456 789</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Địa chỉ</h4>
+                            <p>Hà Nội, Việt Nam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form onsubmit="submitContact(event)">
+                        <div class="form-group">
+                            <input type="text" placeholder="Họ và tên" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Nội dung tin nhắn" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary btn-full">Gửi tin nhắn</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <span class="logo-icon">📚</span>
+                        <span class="logo-text">GiaSư<span class="highlight">Online</span></span>
+                    </div>
+                    <p class="footer-description">
+                        Nền tảng kết nối gia sư và học viên uy tín hàng đầu Việt Nam
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Về chúng tôi</h4>
+                    <ul>
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#tutors">Tìm gia sư</a></li>
+                        <li><a href="#become-tutor">Trở thành gia sư</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Hướng dẫn sử dụng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Kết nối với chúng tôi</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">YouTube</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GiaSưOnline. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div class="modal" id="tutorModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('tutorModal')">&times;</button>
+            <div id="tutorDetails"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <h2>Đăng nhập</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Đăng nhập</button>
+            </form>
+            <p class="modal-footer-text">
+                Chưa có tài khoản? <a href="#" onclick="closeModal('loginModal'); openRegisterModal()">Đăng ký ngay</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+            <h2>Đăng ký tài khoản</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Xác nhận mật khẩu</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Đăng ký</button>
+            </form>
+            <p class="modal-footer-text">
+                Đã có tài khoản? <a href="#" onclick="closeModal('registerModal'); openLoginModal()">Đăng nhập</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="modal" id="becomeTutorModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('becomeTutorModal')">&times;</button>
+            <h2>Đăng ký trở thành gia sư</h2>
+            <form onsubmit="handleBecomeTutor(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Họ và tên *</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Số điện thoại *</label>
+                        <input type="tel" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Khu vực *</label>
+                        <select required>
+                            <option value="">Chọn khu vực</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="TP.HCM">TP. Hồ Chí Minh</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                            <option value="Hải Phòng">Hải Phòng</option>
+                            <option value="Cần Thơ">Cần Thơ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Môn học giảng dạy *</label>
+                    <input type="text" placeholder="VD: Toán, Tiếng Anh, Vật Lý..." required>
+                </div>
+                <div class="form-group">
+                    <label>Trình độ học vấn *</label>
+                    <input type="text" placeholder="VD: Sinh viên Đại học Bách Khoa" required>
+                </div>
+                <div class="form-group">
+                    <label>Kinh nghiệm giảng dạy</label>
+                    <textarea rows="3" placeholder="Mô tả kinh nghiệm giảng dạy của bạn..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Giá/buổi (VNĐ) *</label>
+                        <input type="number" min="50000" step="10000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian có thể dạy</label>
+                        <input type="text" placeholder="VD: Tối thứ 2, 4, 6">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Gửi đăng ký</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
